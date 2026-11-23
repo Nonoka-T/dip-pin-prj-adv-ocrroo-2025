@@ -15,6 +15,7 @@ Make sure you read the docstrings C.A.R.E.F.U.L.Y (yes, I took the L to check th
 from pathlib import Path
 import cv2
 import numpy as np
+import pytesseract
 
 
 VID_PATH = Path("resources/oop.mp4")
@@ -116,13 +117,29 @@ class CodingVideo:
             raise ValueError("Invalid frame in target location")
         saved = cv2.imwrite(output_path, frame)
         if not saved:
-            raise ValueError("Failed to save image to {output_path}")
+            raise ValueError(f"Failed to save image to {output_path}")
+
+    def get_text_at_time(self, seconds: int) -> str:
+        """
+        return the text show in the video at the given time
+        Use pytesseract (python wrapper for Tesseract OCR) - image_to_string reads the text in an image.
+        It accepts Numpy array and expect RGB, so frame comes from get_frame_rgb_array.
+
+        Reference
+        ---------
+        https://github.com/madmaze/pytesseract/blob/master/README.rst
+        """
+        frame_number = self.get_frame_number_at_time(seconds)
+        rgb_frame = self.get_frame_rgb_array(frame_number)
+        text = pytesseract.image_to_string(rgb_frame)
+        return text
 
 def test():
     """Try out your class here"""
     oop = CodingVideo("resources/oop.mp4")
     print(oop)
     oop.save_as_image(42)
+    print(oop.get_text_at_time(42))
 
 if __name__ == '__main__':
     test()
