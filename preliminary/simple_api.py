@@ -4,10 +4,11 @@ Drive the API to complete "interprocess communication"
 
 Requirements
 """
+from email.policy import default
 
 from fastapi import FastAPI, HTTPException
 from fastapi import Response
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from pathlib import Path
 from library_basics import CodingVideo
 
@@ -19,14 +20,16 @@ app = FastAPI()
 # You can add uploads later (not required for assessment)
 # For now, we will just hardcode are samples
 VIDEOS: dict[str, Path] = {
-    "demo": Path("../resources/oop.mp4")
+    "demo": Path("resources/oop.mp4")
 }
 
 class VideoMetaData(BaseModel):
     fps: float
     frame_count: int
     duration_seconds: float
-    _links: dict | None = None
+    #pydantic treat name with "_" as private and leave them out of the response
+    #the field is called "links" abd show as "_links" in json
+    links: dict | None = Field(default=None, serialization_alias="_links")
 
 @app.get("/video")
 def list_videos():
@@ -68,7 +71,7 @@ def video(vid: str):
     video = _open_vid_or_404(vid)
     try:
             meta = _meta(video)
-            meta._links = {
+            meta.links = {
                 "self": f"/video/{vid}",
                 "frames": f"/video/{vid}/frame/{{seconds}}"
             }
@@ -79,10 +82,21 @@ def video(vid: str):
 
 @app.get("/video/{vid}/frame/{t}", response_class=Response)
 def video_frame(vid: str, t: float):
+    #open video before "try", if it's not found, 404 return
+    video = _open_vid_or_404(vid)
     try:
-        video = _open_vid_or_404(vid)
         return Response(content=video.get_image_as_bytes(t), media_type="image/png")
     finally:
       video.capture.release()
 
-# TODO: add enpoint to get ocr e.g. /video/{vid}/frame/{t}/ocr
+@app.get("/video/{vid}/frame/{t}/ocr")
+def video_frame_ocr(vid: str, t: float):
+    """return the text shown in the video ar time t seconds"""
+    video = _open_vid_or_404(vid)
+    try:
+        #read text in the frame with Tesseract
+        text = video.get_text_at_time(t)
+        return {"text": text}
+    finally:
+        #close the video file when finished
+        video.capture.release()
