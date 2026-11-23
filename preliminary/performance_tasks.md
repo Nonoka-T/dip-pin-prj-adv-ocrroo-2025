@@ -73,13 +73,23 @@ Tesseract consists of both an OCR Engine and a command line program. It is predo
 1. Examine the [Readme](https://github.com/tesseract-ocr/tesseract?tab=readme-ov-file) and find a list of Python wrappers.
 
 2. What is the URL that lists Python wrappers for Tesseract?
-  > <url-here>
+  > <url-here> https://tesseract-ocr.github.io/tessdoc/AddOns.html#tesseract-wrappers
 
 3. Select a Python wrapper. What wrapper did you choose and why? Ensure you address each element below in your answer
 > name of the python library
+> - pytesseract (https://github.com/madmaze/pytesseract)
+
 > how long ago was a commit made to the library
+> - Last commit was on 18th Feb 2025
+
 > does it have external dependencies
-> how does it suite the project requirements
+> - It needs python packages Pillow and packaging (uv installs these automatically),
+> and the Tesseract OCR engine must be installed separately on the computer (on mac: `brew install tesseract`).
+
+> how does it suite the project requirement
+> - It is simple to use with on function `image_to_string()`, return the text in an image.
+> It accepts a NumPy array so frame from `CodingVideo.get_frame_rgb_array()` can be passed straight in.
+> - README shoe this in "Support for OpenCV image/NumPy array objects"
 
 4. Use UV to add the dependency to your project and your `pyproject.toml`
 
