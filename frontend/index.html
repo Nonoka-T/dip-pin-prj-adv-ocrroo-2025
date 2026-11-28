@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCRroo - Read the code in a video</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>OCRroo</h1>
+        <p>Play a coding video, pause it and read the code on the screen as text.</p>
+    </header>
+
+    <main>
+        <!-- Status message, screen reader read this out when it changed -->
+        <p id="status" role="status" aria-live="polite">Connecting to the server...</p>
+
+        <section aria-labelledby="player-heading">
+            <h2 id="player-heading">Video player</h2>
+            <video id="player" controls width="640" aria-label="Coding video"></video>
+
+            <div class="controls">
+                <button id="play-button" type="button">Play (P)</button>
+                <button id="back-button" type="button">Back 5 seconds (J)</button>
+                <button id="forward-button" type="button">Forward 5 seconds (L)</button>
+                <button id="read-button" type="button">Read code at current time (R)</button>
+            </div>
+        </section>
+
+        <section aria-labelledby="time-heading">
+            <h2 id="time-heading">Go to a time you want</h2>
+            <form id="time-form" novalidate>
+                <label for="time-input">Time in seconds</label>
+                <input id="time-input" type="text" inputmode="decimal" aria-describedby="time-help time-error">
+                <p id="time-help">Enter a number from 0 to the end of video.</p>
+                <p id="time-error" class="error" role="alert"></p>
+                <button type="submit">Go and read code</button>
+            </form>
+        </section>
+
+        <section aria-labelledby="result-heading">
+            <h2 id="result-heading">Code from video</h2>
+            <pre id="ocr-output" tabindex="0" aria-label="Code from the video">No code read yet</pre>
+        </section>
+
+        <section aria-labelledby="setting-heading">
+            <h2 id="setting-heading">Setting</h2>
+            <label for="text-size">Text size for the code</label>
+            <select id="text-size">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="ex-large">Extra Large</option>
+            </select>
+        </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/preference.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

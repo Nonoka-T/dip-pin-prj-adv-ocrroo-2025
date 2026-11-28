@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+video {
+    max-width: 100%;
+    background-color: #000000;
+}
+
+button, input, select {
+    font-size: 18px;
+    padding: 8px 12px;
+    margin: 4px 4px 4px 0;
+}
+
+/*clear outline so keyboard user can see where they are */
+button:focus, input:focus, select:focus, pre:focus {
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
+}
+
+.error {
+    color: #b00020;
+    font-weight: bold;
+}
+
+/* text size of the code is set from JavaScript (personalisation) */
+#ocr-output {
+    font-size: var(--code-size, 18px);
+    white-space: pre-wrap;
+    border: 2px solid #000000;
+    padding: 12px;
+    min-height: 100px;
+}
