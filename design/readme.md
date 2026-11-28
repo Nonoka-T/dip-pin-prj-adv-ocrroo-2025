@@ -33,14 +33,16 @@ Your persona should reflect the diversity of people with disabilities and their 
 
 What is the user journey? What are the steps the user takes to achieve their goals?
 
-- **Step 1**: [Description of the step]
-- **Step 2**: [Description of the step]
-- **Step 3**: [Description of the step]
-- **Step 4**: [Description of the step]
+- **Step 1**: Sean opens OCRroo in the browser and NVDA read "Video ready"
+- **Step 2**: He presses P to play the coding video and pauses it when speaker writes code
+- **Step 3**: He presses R and NVDA read "Reading the code" and then "Finished reading the code"
+- **Step 4**: He presses Tab to move to the code area and NVDA read the code line by line
 
 ## UI Interaction Patterns
 
-What are the UI interaction patterns you will use in your project?
+- Keyboard shortcuts (P, J, L, R) and Tab for every action
+- Messages and errors are read out by NVDA
+- Clear labels on every button and input
 
 ## AI Prompts
 

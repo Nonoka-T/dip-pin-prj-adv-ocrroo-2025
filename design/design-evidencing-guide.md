@@ -50,8 +50,8 @@ What does this person need from the application? What are their pain points?
 
 ### Relevant issue
 >
-> Link to an issue that covers a pain point relevant to the persona and explain why it is relevant.
->
+> [Link to Issue](https://github.com/Nonoka-T/dip-pin-prj-adv-ocrroo-2025/issues/1)
+> Speakers in coding videos often don't read the code out. This issue let NVDA read the code on the screen to Sean
 
 ### Validation
 
