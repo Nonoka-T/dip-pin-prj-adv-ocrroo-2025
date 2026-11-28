@@ -8,12 +8,19 @@ from email.policy import default
 
 from fastapi import FastAPI, HTTPException
 from fastapi import Response
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from pathlib import Path
 from library_basics import CodingVideo
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+)
 
 
 # We'll create a lightweight "database" for our videos
@@ -100,3 +107,11 @@ def video_frame_ocr(vid: str, t: float):
     finally:
         #close the video file when finished
         video.capture.release()
+
+@app.get("/video/{vid}/stream")
+def video_stream(vid: str):
+    """send the whole video file so frontend can play"""
+    path = VIDEOS.get(vid)
+    if not path or not path.is_file():
+        raise HTTPException(status_code=404, detail="Video not found")
+    return FileResponse(path, media_type="video/mp4")
